@@ -35,14 +35,17 @@ namespace MovieLibrary.ViewModel
         private string _errorText;
         private MainWindow _window;
         private ContentViewModel _contentViewModel;
+        private AddNewMovieViewModel _addNewMovieViewModel;
+        private bool _isAddMovie;
 
         #endregion
 
         #region Constructors
 
-        public MainViewModel(ContentViewModel contentViewModel)
+        public MainViewModel(ContentViewModel contentViewModel, AddNewMovieViewModel addNewMovieViewModel)
         {
             _contentViewModel = contentViewModel;
+            _addNewMovieViewModel = addNewMovieViewModel;
             _window = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
 
             MenuTreeViewContent = new MenuTreeViewContent().Content;
@@ -56,7 +59,8 @@ namespace MovieLibrary.ViewModel
         #region Commands
 
         public RelayCommand ApplyParametersCommand => new RelayCommand(ApplyParameters);       
-        public RelayCommand LoadedProgramCommand => new RelayCommand(LoadContentView);
+        public RelayCommand ContentViewCommand => new RelayCommand(ContentView);
+        public RelayCommand AddNewMovieViewCommand => new RelayCommand(AddNewMovieView);
         public RelayCommand<CancelEventArgs> ClosingProgramCommand => new RelayCommand<CancelEventArgs>(ClosingProgram);
 
         private void ApplyParameters()
@@ -90,10 +94,26 @@ namespace MovieLibrary.ViewModel
                 ErrorText = string.Empty;
             }
         }
-        private void LoadContentView()
+        private void ContentView()
         {
             _window.MainPanel.Children.Clear();
             _window.MainPanel.Children.Add(new View.ContentView() { DataContext = _contentViewModel });
+        }
+        private void AddNewMovieView()
+        {
+            if (!_isAddMovie)
+            {
+                _isAddMovie = true;
+                _window.MenuToggleButton.Visibility = Visibility.Hidden;
+                _window.MainPanel.Children.Clear();
+                _window.MainPanel.Children.Add(new View.AddNewMovieView() { DataContext = _addNewMovieViewModel });
+            }
+            else
+            {
+                _isAddMovie = false;
+                _window.MenuToggleButton.Visibility = Visibility.Visible;
+                ContentView();
+            }
         }
         private void ClosingProgram(CancelEventArgs e)
         {

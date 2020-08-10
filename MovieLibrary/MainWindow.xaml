@@ -19,7 +19,7 @@
     
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding LoadedProgramCommand}"/>
+            <i:InvokeCommandAction Command="{Binding ContentViewCommand}"/>
         </i:EventTrigger>
 
         <i:EventTrigger EventName="Closing">
@@ -44,28 +44,38 @@
                         <!--Параметры-->
                         <StackPanel Grid.Column="0">
                             <!--Заголовок-->
-                            <TextBlock Text="Параметры" HorizontalAlignment="Center" Margin="0,0,0,10" Style="{StaticResource MaterialDesignBody1TextBlock}" />
+                            <TextBlock Text="Параметры" HorizontalAlignment="Center" 
+                                       Margin="0,0,0,10" 
+                                       Style="{StaticResource MaterialDesignBody1TextBlock}" />
 
                             <!--Ресурс-->
                             <StackPanel Margin="15,20,10,0">
                                 <TextBlock Text="Поисковый ресурс" />
                                 <DockPanel Margin="0,10,0,0">
-                                    <RadioButton x:Name="ImdbRadioButton" Content="IMDB" Padding="5,0,30,0" IsChecked="{Binding ImdbIsChecked}" 
-                                                 Style="{StaticResource MaterialDesignRadioButton}" />
-                                    <RadioButton x:Name="KinoPoiskRadioButton" Content="КиноПоиск" Padding="5,0,0,0" IsChecked="{Binding KinoPoiskIsChecked}"
-                                                 Style="{StaticResource MaterialDesignRadioButton}" />
+                                    <RadioButton Content="IMDB" 
+                                                 Padding="5,0,30,0" 
+                                                 IsChecked="{Binding ImdbIsChecked}" 
+                                                 Style="{StaticResource MaterialDesignRadioButton}"/>
+                                    <RadioButton Content="КиноПоиск"
+                                                 Padding="5,0,0,0" 
+                                                 IsChecked="{Binding KinoPoiskIsChecked}"
+                                                 Style="{StaticResource MaterialDesignRadioButton}"/>
                                 </DockPanel>
                             </StackPanel>
 
                             <!--Жанр и Страна-->
-                            <TreeView x:Name="GenresTreeView" ItemsSource="{Binding MenuTreeViewContent}" MinWidth="220" Margin="5,20,0,0">
+                            <TreeView ItemsSource="{Binding MenuTreeViewContent}" 
+                                      MinWidth="220" Margin="5,20,0,0">
                                 <TreeView.Resources>
-                                    <HierarchicalDataTemplate DataType="{x:Type models:TreeCategory}" ItemsSource="{Binding TreeItems}">
-                                        <TextBlock Text="{Binding Name}" Margin="3,2" />
+                                    <HierarchicalDataTemplate DataType="{x:Type models:TreeCategory}"
+                                                              ItemsSource="{Binding TreeItems}">
+                                        <TextBlock Text="{Binding Name}" Margin="3,2"/>
                                     </HierarchicalDataTemplate>
 
                                     <DataTemplate DataType="{x:Type models:TreeItem}">
-                                        <CheckBox Content="{Binding Name}" IsChecked="{Binding IsChecked}" Margin="3,2" IsThreeState="False" />
+                                        <CheckBox Content="{Binding Name}" 
+                                                  IsChecked="{Binding IsChecked}" Margin="3,2" 
+                                                  IsThreeState="False" />
                                     </DataTemplate>
                                 </TreeView.Resources>
                             </TreeView>
@@ -75,14 +85,16 @@
                                 <TextBlock Text="Временной период (год)" />
                                 <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
                                     <TextBlock  Text="с" Margin="0,0,15,0" />
-                                    <ComboBox x:Name="BeginYearComboBox" materialDesign:HintAssist.Hint="&#8211;" Width="65"
-                                              IsEditable="True"
-                                              ItemsSource="{Binding Dates}" Padding="0,0,0,10" IsReadOnly="True" HorizontalContentAlignment="Center"
+                                    <ComboBox materialDesign:HintAssist.Hint="&#8211;"
+                                              Width="65" IsEditable="True"
+                                              ItemsSource="{Binding Dates}" Padding="0,0,0,10" 
+                                              IsReadOnly="True" HorizontalContentAlignment="Center"
                                               SelectedItem="{Binding BeginYearSelected}" />
                                     <TextBlock Text="по" Margin="15,0,15,0" />
-                                    <ComboBox x:Name="EndYearComboBox" materialDesign:HintAssist.Hint="&#8211;" Width="65" 
-                                              IsEditable="True"
-                                              ItemsSource="{Binding Dates}" Padding="0,0,0,10" IsReadOnly="True" HorizontalContentAlignment="Center"
+                                    <ComboBox materialDesign:HintAssist.Hint="&#8211;" 
+                                              Width="65" IsEditable="True"
+                                              ItemsSource="{Binding Dates}" Padding="0,0,0,10" 
+                                              IsReadOnly="True" HorizontalContentAlignment="Center"
                                               SelectedItem="{Binding EndYearSelected}" />
                                 </StackPanel>
                             </StackPanel>
@@ -90,24 +102,30 @@
                             <!--Рейтинг-->
                             <StackPanel Margin="15,20,10,10">
                                 <TextBlock Text="Рейтинг" />
-                                <Slider x:Name="RatingSlider" TickFrequency="1" Orientation="Horizontal" TickPlacement="BottomRight" 
-                                        Minimum="1" Maximum="10" Value="{Binding RatingValue}" Margin="0,10,0,10" />
+                                <Slider x:Name="RatingSlider" TickFrequency="1" Margin="0,10,0,10"
+                                        Orientation="Horizontal" TickPlacement="BottomRight"         
+                                        Minimum="1" Maximum="10" Value="{Binding RatingValue}"/>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                     <Label Content="Начиная с" />
-                                    <Label Content="{Binding ElementName=RatingSlider, Path=Value}" ContentStringFormat="0.0" />
+                                    <Label Content="{Binding ElementName=RatingSlider, Path=Value}"
+                                           ContentStringFormat="0.0" />
                                 </StackPanel>
                             </StackPanel>
 
                             <!--Кнопка "Применить"-->
-                            <Button Content="Применить" Margin="15,20" Height="40" FontSize="16" Command="{Binding ApplyParametersCommand}" 
+                            <Button Content="Применить" 
+                                    Margin="15,20" Height="40" FontSize="16" 
+                                    Command="{Binding ApplyParametersCommand}" 
                                     Style="{StaticResource MaterialDesignRaisedDarkButton}" />
 
                             <!--Сообщение об ошибке-->
-                            <TextBlock Text="{Binding ErrorText}" HorizontalAlignment="Center" Foreground="#D32F2F" Padding="0,50" TextAlignment="Center" />
+                            <TextBlock Text="{Binding ErrorText}" HorizontalAlignment="Center" 
+                                       Foreground="#D32F2F" Padding="0,50" TextAlignment="Center" />
                         </StackPanel>
 
                         <!--Для Скролбара-->
-                        <Border Grid.Column="1" Width="{x:Static SystemParameters.VerticalScrollBarWidth}">
+                        <Border Grid.Column="1" 
+                                Width="{x:Static SystemParameters.VerticalScrollBarWidth}">
                             <Border.Style>
                                 <Style TargetType="Border">
                                     <Style.Triggers>
@@ -127,11 +145,29 @@
         <DockPanel>
             <!--Верхняя панель-->
             <materialDesign:ColorZone Mode="PrimaryDark" Padding="16" materialDesign:ShadowAssist.ShadowDepth="Depth2" DockPanel.Dock="Top">
-                <DockPanel>
-                    <ToggleButton x:Name="MenuToggleButton" IsChecked="{Binding MenuToggleButtonIsChecked}" Style="{DynamicResource MaterialDesignHamburgerToggleButton}"/>
-                    <TextBlock Text="Библиотека" HorizontalAlignment="Center" VerticalAlignment="Center"
-                               Style="{StaticResource MaterialDesignHeadline5TextBlock}" Foreground="White" />
-                </DockPanel>
+                <Grid>
+                    <ToggleButton x:Name="MenuToggleButton"
+                                  HorizontalAlignment="Left" VerticalAlignment="Center"  
+                                  IsChecked="{Binding MenuToggleButtonIsChecked}" 
+                                  Style="{DynamicResource MaterialDesignHamburgerToggleButton}"/>
+                    <TextBlock Text="Библиотека" 
+                               HorizontalAlignment="Center" VerticalAlignment="Center"    
+                               Foreground="White"
+                               Style="{StaticResource MaterialDesignHeadline5TextBlock}"/>
+                    <ToggleButton HorizontalAlignment="Right" VerticalAlignment="Center"  
+                                  Background="Transparent"                                  
+                                  Style="{StaticResource MaterialDesignActionToggleButton}" 
+                                  Command="{Binding AddNewMovieViewCommand}">
+                        <ToggleButton.Content>
+                            <materialDesign:PackIcon Kind="Add" Width="35" Height="35" 
+                                                     ToolTip="Добавить фильм"/>
+                        </ToggleButton.Content>
+                        <materialDesign:ToggleButtonAssist.OnContent>
+                            <materialDesign:PackIcon Kind="Close" Width="35" Height="35"
+                                                     ToolTip="Закрыть"/>
+                        </materialDesign:ToggleButtonAssist.OnContent>
+                    </ToggleButton>
+                </Grid>
             </materialDesign:ColorZone>
             <!--Основной контент-->
             <Grid x:Name="MainPanel" />

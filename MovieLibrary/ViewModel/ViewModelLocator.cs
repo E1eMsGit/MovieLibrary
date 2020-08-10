@@ -44,6 +44,7 @@ namespace MovieLibrary.ViewModel
 
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<ContentViewModel>();
+            SimpleIoc.Default.Register<AddNewMovieViewModel>();
         }
 
         public MainViewModel Main
@@ -59,6 +60,14 @@ namespace MovieLibrary.ViewModel
             get
             {
                 return ServiceLocator.Current.GetInstance<ContentViewModel>();
+            }
+        }
+
+        public AddNewMovieViewModel AddNewMovie
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<AddNewMovieViewModel>();
             }
         }
 
